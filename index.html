@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barbearia JC</title>
+
+  <!-- SEGURANÇA -->
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://kit.fontawesome.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' https: data: blob:;
+  frame-src https://www.google.com https://maps.googleapis.com;
+  connect-src 'self';
+  object-src 'none';
+  base-uri 'self';">
+
+  <!-- Fonte e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    /* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #000, #222);
+  padding: 10px 15px 10px 2px; /* menos espaço para deixar mais compacta */
+  height: 75px; /* define altura fixa */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* 🔹 Alinhamento suave da logo */
+.navbar img {
+  height: 65px; /* tamanho ideal para navbar */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}  
+
+/* 🔹 Links da navbar */
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-links a:hover {
+  color: #fbbf24;
+}
+
+/* 🔹 Ícone de menu (mobile) */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 🔹 Responsivo (celular) */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    background: #111;
+    position: absolute;
+    top: 75px; /* alinhado com altura da navbar */
+    left: 0;
+    width: 100%;
+    padding: 15px 0 15px 30px;
+    border-top: 2px solid #fbbf24;   
+  }
+
+  .navbar-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+
+    /* SEÇÕES GERAIS */
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #fbbf24;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .sobre {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .galeria {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .galeria img {
+      width: 280px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .galeria img:hover { transform: scale(1.05); }
+
+    #espaco{
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #111;
+      color: white;
+    }
+
+    #espaco h2{
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    #espaco .galeria{
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    #espaco .galeria img{
+      width: 40%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    
+    .barbeiros {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: #222;
+      border-radius: 10px;
+      width: 280px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: transform 0.3s;
+    }
+
+    .card:hover { transform: scale(1.05); }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    #precos {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #111;
+      color: #fff;
+    }
+
+    #precos h2 {
+      color: #f2c94c;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    #precos img {
+      width: 80%;
+      max-width: 600px;
+      max-height: 450px;
+      object-fit: contain;
+    }
+
+    #precos img:hover {
+      transform: scale(1.03);
+    }
+
+    #planos {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #111;
+      color: #fff;
+    }
+
+    #planos h2{
+      color: #f2c94c;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+
+    .planos-imgs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .planos-imgs img {
+      width: 320px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease;
+    }
+
+    .planos-imgs img:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      background-color: #fbbf24;
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e6a600;
+    }
+
+    footer {
+      background-color: #000;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+  #localizacao {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #111;
+  color: white;
+}
+
+#localizacao h2 {
+  color: #fbbf24;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+#localizacao p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.mapas {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.mapa {
+  background: #1a1a1a;
+  border-radius: 15px;
+  padding: 15px;
+  width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.mapa h3 {
+  margin-bottom: 10px;
+  color: #fbbf24;
+  font-size: 1.1rem;
+}
+
+.mapa iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .mapas {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mapa {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+
+
+
+    footer .footer-content a {
+      color: #fbbf24;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+
+    footer .footer-content a:hover { color: #fff; }
+
+    footer .footer-content i { margin-right: 6px; }
+
+    html { scroll-behavior: smooth; }
+
+    section{
+      scroll-margin-top: 90px;
+    }
+
+    .logo-sobre{
+      width: 200px; /*Tamanho /ajustavel */
+      height: auto;
+      display: block;
+      margin: 0 auto 15px; /*centraliza e da espaço abaixo */
+      border-radius: 10px;
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img src="image/logo jc.png" alt="Logo Barbearia JC"> <!-- coloque aqui sua logo PNG -->
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="navbar-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#espaco">Nosso Espaço</a>
+      <a href="#cortes">Cortes</a>
+      <a href="#barbeiros">Barbeiros</a>
+      <a href="#precos">Preços</a>
+      <a href="#localizacao">Localização</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <img src="image/logo jc.png" alt="logo barbearia JC"
+    class="logo-sobre">
+    
+    <h2>Sobre a Barbearia JC</h2>
+    <p class="sobre">
+      A <strong>Barbearia JC</strong> é o lugar ideal para quem busca estilo, confiança e qualidade.
+      Nossa missão é deixar cada cliente com o visual impecável, valorizando sua identidade e oferecendo um atendimento de primeira.
+      Aqui, o corte é uma arte — feita com atenção, técnica e paixão pelo que fazemos.
+    </p>
+  </section>
+
+
+  <section id="espaco">
+    <h2>Nosso Espaço</h2>
+    <p class="sobre">
+      Um ambiente sofisticado, moderno e exclusivo, onde cada detalhe é pensado para seu bem-estar
+    </p>
+     <div class="galeria">
+      <img src="image/nosso-espaço (1).jpg" alt="CADEIRA INFANTIL TEMÁTICA DE SUPER-HERÓIS - BARBEARIA JC">
+      <img src="image/nosso-espaço (2).jpg" alt="INTERIOR MODERNO E CONFORTÁVEL DA BARBEARIA JC">
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="cortes">
+    <h2>Cortes</h2>
+    <div class="galeria">
+      <img src="image/corte.jpg"alt="Corte 1">
+      <img src="image/corte2.jpg" alt="Corte 2">
+      <img src="image/corte3.jpg" alt="Corte 3">
+      <img src="image/corte4.jpg" alt="Corte 4">
+    </div>
+  </section>
+
+  <!-- BARBEIROS -->
+  <section id="barbeiros">
+    <h2>Nossos Barbeiros</h2>
+    <div class="barbeiros">
+      <div class="card">
+        <img src="image/barbeiro.jpg" alt="Barbeiro Harllen">
+        <h3>Harllen</h3>
+        <button onclick="escolherBarbeiro('Harllen')">Escolher Harllen</button>
+      </div>
+
+      <div class="card">
+        <img src="https://images.pexels.com/photos/2040189/pexels-photo-2040189.jpeg" alt="Barbeiro Carlos">
+        <h3>Carlos</h3>
+        <button onclick="escolherBarbeiro('Carlos')">Escolher Carlos</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABELA DE PREÇOS -->
+  <section id="precos">
+    <h2>Tabela de Preços</h2>
+    <div class="precos-imgs">
+      <img src="image/tabela-preços-jc.jpg" alt="Tabela de Preços Barbearia JC">
+    </div>
+  </section>
+
+  <!--PLANOS-->
+  <section id="planos">
+    <h2>Nossos Planos</h2>
+    <div class="planos-imgs">
+      <img src="image/plano-de-cortes (1).jpg" alt="Plano Barbearia JC Básico">
+      <img src="image/plano-de-cortes (2).jpg" alt="Plano Barbearia JC Premium">
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <h2>Agende seu Corte</h2>
+    <p>Fale conosco diretamente pelo WhatsApp para garantir seu horário.</p>
+    <button onclick="window.open('https://wa.me/559282369641', '_blank')">📱 Falar no WhatsApp</button>
+  </section>
+
+    <!-- LOCALIZAÇÃO -->
+ <section id="localizacao">
+  <h2>📍 Localização</h2>
+  <p>Encontre a Barbearia JC mais próxima de você 👇</p>
+
+ <div class="mapas">
+  <div class="mapa">
+    <h3>📍 Barbearia JC 01</h3>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.2385800793572!2d-59.9281452!3d-3.0305307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1d364cd10699%3A0x8c9f0b80d26724a4!2sBarbearia%20JC%20-%2001!5e0!3m2!1spt-BR!2sbr!4v1760969458873!5m2!1spt-BR!2sbr" 
+      width="600" 
+      height="450" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+   <div class="mapa">
+      <h3>📍 Barbearia JC 02</h3>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.2132253135865!2d-59.94300756214861!3d-3.0374099864762583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1b2000957919%3A0x12b939fd20aaa4a0!2sBarbearia%20JC%20-%2002!5e0!3m2!1spt-BR!2sbr!4v1760971173206!5m2!1spt-BR!2sbr" 
+      width="600" 
+      height="450" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+</div>
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+   <div class="footer-content">
+     <p>© 2025 Barbearia JC | Desenvolvido com 💈 por Caio</p>
+     <p>Siga a gente:
+       <a href="https://www.instagram.com/barbearia.jc__/?hl=pt-br" target="_blank">
+         <i class="fab fa-instagram"></i> BARBEARIA JC 🇧🇷
+       </a>
+     </p>
+    </div>
+  </footer>
+
+  <script>
+    function escolherBarbeiro(nome) {
+      alert("Você escolheu o barbeiro " + nome + "! Envie uma mensagem no WhatsApp para agendar seu horário.");
+      window.open("https://wa.me/559282369641?text=Olá! Gostaria de agendar um corte com o barbeiro " + nome, "_blank");
+    }
+
+    function toggleMenu() {
+      document.querySelector('.navbar-links').classList.toggle('active');
+    }
+
+     // Fecha o menu automaticamente ao clicar em um link (modo mobile)
+  document.querySelectorAll('.navbar-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.querySelector('.navbar-links');
+      if (menu.classList.contains('active')) {
+        menu.classList.remove('active');
+      }
+    });
+  });
+  </script>
+</body>
+</html>
